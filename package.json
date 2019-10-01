@@ -4,9 +4,51 @@
   "description": "A ternary search tree implementation in TypeScript.",
   "author": "Maxwell Brown <maxwellbrown1990@gmail.com>",
   "license": "MIT",
+  "keywords": [
+    "ternary",
+    "search",
+    "trie"
+  ],
   "repository": {
     "type": "git",
     "url": "git@github.com:IMax153/ternary-search-trie.git"
   },
-  "main": "index.js"
+  "bugs": {
+    "url": "https://github.com/IMax153/ternary-search-trie/issues"
+  },
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "bump": "npm version patch",
+    "test": "jest --config jest.config.json",
+    "prepare": "yarn build",
+    "prepublishOnly": "yarn test",
+    "version": "git add -A src",
+    "postversion": "git push && git push --tags"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.3.2",
+    "@typescript-eslint/parser": "^2.3.2",
+    "eslint": "^6.5.1",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-prettier": "^6.3.0",
+    "eslint-import-resolver-node": "^0.3.2",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.15.1",
+    "lint-staged": "^9.4.1",
+    "typescript": "^3.6.3"
+  },
+  "files": [
+    "lib/**/*"
+  ],
+  "lint-staged": {
+    "*.{ts,js}": [
+      "prettier --write",
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "pre-commit": "lint:staged"
 }

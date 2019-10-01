@@ -1,0 +1,57 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 8,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "modules": true
+    }
+  },
+  "plugins": ["@typescript-eslint", "import"],
+  "extends": [
+    "airbnb",
+    "plugin:@typescript-eslint/recommended",
+    "prettier",
+    "prettier/@typescript-eslint"
+  ],
+
+  "settings": {
+    // Temp fix for import.
+    // https://github.com/benmosher/eslint-plugin-import/issues/1285#issuecomment-466212438
+    "import/extensions": ["js", "ts"],
+    "import/parsers": {
+      "@typescript-eslint/parser": ["js", "ts"]
+    },
+    "import/resolver": {
+      "node": {
+        "extensions": ["js", "ts"]
+      }
+    }
+  },
+  "rules": {
+    // Disable unnecessary @typescript-eslint settings
+    "@typescript-eslint/ban-ts-ignore": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/interface-name-prefix": "off",
+    "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    // Code Style Settings
+    "class-methods-use-this": "off",
+    "func-style": ["error", "declaration", { "allowArrowFunctions": true }],
+    "max-classes-per-file": "off",
+    "no-bitwise": "off",
+    "no-console": "off",
+    "no-new": "off",
+    "no-param-reassign": "off",
+    "no-plusplus": "off",
+    "no-shadow": "off",
+    "no-undef": "off",
+    "no-underscore-dangle": "off",
+    // Import Settings
+    "import/named": "off",
+    "import/no-extraneous-dependencies": "off",
+    "import/no-cycle": "off",
+    "import/no-unresolved": "off",
+    "import/prefer-default-export": "off"
+  }
+}
