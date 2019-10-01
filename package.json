@@ -1,0 +1,12 @@
+{
+  "name": "ternary-search-trie",
+  "version": "1.0.0",
+  "description": "A ternary search tree implementation in TypeScript.",
+  "author": "Maxwell Brown <maxwellbrown1990@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:IMax153/ternary-search-trie.git"
+  },
+  "main": "index.js"
+}
