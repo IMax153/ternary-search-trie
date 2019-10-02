@@ -1,84 +1,113 @@
-# Project Title
+# Ternary Search Trie
 
-One Paragraph of project description goes here
+A ternary search trie implementation in TypeScript.
 
-## Getting Started
+## Installing
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+You can install the package via npm or yarn.
 
-### Prerequisites
-
-What things you need to install the software and how to install them
+#### NPM
 
 ```
-Give examples
+npm install ternary-search-trie
 ```
 
-### Installing
-
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
+#### Yarn
 
 ```
-Give the example
-```
-
-And repeat
-
-```
-until finished
+yarn add ternary-search-trie
 ```
 
 End with an example of getting some data out of the system or using it for a little demo
 
-## Running the tests
+## Documentation
 
-Explain how to run the automated tests for this system
+## Trie
 
-### Break down into end to end tests
+Represents a [ternary search trie](https://en.wikipedia.org/wiki/Ternary_search_tree).
 
-Explain what these tests test and why
+#### Usage
 
-```
-Give an example
-```
+```typescript
+import { Trie } from 'ternary-search-trie';
 
-### And coding style tests
+interface ValueType {
+  data: string;
+}
 
-Explain what these tests test and why
-
-```
-Give an example
+const trie = new Trie<ValueType>();
 ```
 
-## Deployment
+### Members
 
-Add additional notes about how to deploy this on a live system
+#### Trie.size
 
-## Built With
+Gets the size of the tree in terms of the number of nodes present within the tree.
 
-- [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-- [Maven](https://maven.apache.org/) - Dependency Management
-- [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+### Methods
+
+#### keys()
+
+Gets all keys present in the tree.
+
+#### set(key, value)
+
+Creates a new node in the tree with the specified key and value.
+
+| Param |   Type    | Description           |
+| ----- | :-------: | :-------------------- |
+| key   |  string   | The key of the node   |
+| value | ValueType | The value of the node |
+
+#### get(key)
+
+Recursively searches the tree for the node with the specified key and returns its value if it exists.
+
+| Param |  Type  | Description         |
+| ----- | :----: | :------------------ |
+| key   | string | The key of the node |
+
+#### del(key)
+
+Deletes a node from the tree if it exists.
+
+| Param |  Type  | Description                   |
+| ----- | :----: | :---------------------------- |
+| key   | string | The key of the node to delete |
+
+#### traverse(callback)
+
+Performs a depth-first traversal of the tree starting from the root node.
+
+| Param    |                Type                 | Description                                  |
+| -------- | :---------------------------------: | :------------------------------------------- |
+| callback | (node: TrieNode<ValueType>) => void | The callback to execute at each visited node |
+
+#### searchByPrefix(prefix, callback)
+
+Searches the tree using the specified prefix.
+
+| Param    |                        Type                         | Description                                  |
+| -------- | :-------------------------------------------------: | :------------------------------------------- |
+| prefix   |                       string                        | The prefix to search by                      |
+| callback | (prefix: string, node: TrieNode<ValueType>) => void | The callback to execute at each visited node |
+
+#### toString(options)
+
+| Param                 |   Type   | Description                                                          |
+| --------------------- | :------: | :------------------------------------------------------------------- |
+| options               |  object  | Optional parameters for printing the tree                            |
+| options.showFunctions | boolean  | Determines whether or not functions in the tree should be displayed. |
+| options.showValues    | boolean  | Determines whether or not values in the tree should be displayed.    |
+| options.skipKeys      | string[] | Keys in the tree that should not be displayed.                       |
 
 ## Contributing
 
 Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
 
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags).
-
-## Authors
-
-- **Billie Thompson** - _Initial work_ - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
 
 ## Acknowledgments
 

@@ -3,7 +3,7 @@
  * @typedef {Object} TreePrinterOptions
  * @param {boolean} [showFunctions=false] - Determines whether or not functions should be displayed.
  * @param {boolean} [showValues=false] - Determines whether or not values should be displayed.
- * @param {string[]} [skipKeys] - Keys that should not be displayed.
+ * @param {string[]} [skipKeys] - Keys in the tree that should not be displayed.
  */
 export interface TreePrinterOptions {
   showFunctions?: boolean;
@@ -56,7 +56,7 @@ export class TreePrinter<T extends Record<string, any>> {
 
   /**
    * Gets a string representation of the entire object as a tree line-by-line and passes each line to the specified callback function.
-   * @param {(line: string) => void} lineCallback - The callback that will be fired with each line.
+   * @param {Function} lineCallback - The callback that will be fired with each line.
    */
   public asLines(lineCallback: (line: string) => void): void {
     this.growBranch(
@@ -140,11 +140,11 @@ export class TreePrinter<T extends Record<string, any>> {
    * @param {string} key - The key of the branch.
    * @param {Object} root - The root of the branch.
    * @param {boolean} isTerminal - Determines if the branch is terminal.
-   * @param {(T,boolean)[]} lastStates - The previous branches states.
+   * @param {Array<T|boolean>} lastStates - The previous branches states.
    * @param {boolean} showValues - Determines if values should be displayed.
    * @param {boolean} hideFunctions - Determines if values should be displayed.
    * @param {string[]} skipKeys - Which keys should be hidden if any.
-   * @param {(key: string) => void} callback - Callback with the current key value.
+   * @param {Function} callback - Callback with the current key value.
    */
   private growBranch(
     key: keyof T,

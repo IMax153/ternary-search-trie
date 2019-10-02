@@ -130,7 +130,7 @@ export class Trie<Value> {
   }
 
   /**
-   * Recursively searches the tree for the node with the specified key and returns its value, if possible.
+   * Recursively searches the tree for the node with the specified key and returns its value if it exists.
    * @param {string} key - The key of the node.
    */
   public get(key: string): Value | null {
