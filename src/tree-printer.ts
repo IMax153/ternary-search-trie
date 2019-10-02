@@ -1,11 +1,11 @@
 /**
  * Optional parameters for printing the tree.
- * @typedef {Object} PrintTreeOptions
+ * @typedef {Object} TreePrinterOptions
  * @param {boolean} [showFunctions=false] - Determines whether or not functions should be displayed.
  * @param {boolean} [showValues=false] - Determines whether or not values should be displayed.
  * @param {string[]} [skipKeys] - Keys that should not be displayed.
  */
-export interface PrintTreeOptions {
+export interface TreePrinterOptions {
   showFunctions?: boolean;
   showValues?: boolean;
   skipKeys?: string[];
@@ -14,14 +14,14 @@ export interface PrintTreeOptions {
 /**
  * A class that handles printing of trees in an easy-to-read format.
  */
-export class PrintTree<T extends Record<string, any>> {
+export class TreePrinter<T extends Record<string, any>> {
   /**
    *
    * @param {T} tree - The tree to print.
-   * @param {PrintTreeOptions} options - Optional parameters for printing the tree.
+   * @param {TreePrinterOptions} options - Optional parameters for printing the tree.
    */
-  public static create<T>(tree: T, options: PrintTreeOptions): PrintTree<T> {
-    return new PrintTree(tree, options);
+  public static create<T>(tree: T, options: TreePrinterOptions): TreePrinter<T> {
+    return new TreePrinter(tree, options);
   }
 
   /**
@@ -46,7 +46,7 @@ export class PrintTree<T extends Record<string, any>> {
 
   private constructor(
     obj: T,
-    { showFunctions = false, showValues = false, skipKeys = [] }: PrintTreeOptions,
+    { showFunctions = false, showValues = false, skipKeys = [] }: TreePrinterOptions,
   ) {
     this.obj = obj;
     this.showFunctions = showFunctions;

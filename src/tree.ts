@@ -1,4 +1,4 @@
-import { PrintTree, PrintTreeOptions } from './print-tree';
+import { TreePrinter, TreePrinterOptions } from './tree-printer';
 
 /**
  * Represents a single node in the ternary search trie.
@@ -132,11 +132,10 @@ export class Trie<Value> {
   /**
    * Recursively searches the tree for the node with the specified key and returns its value, if possible.
    * @param {string} key - The key of the node.
-   * @param {boolean} splay - // TODO: FIGURE THIS SHIT OUT
    */
-  public get(key: string, splay?: boolean): Value | null {
+  public get(key: string): Value | null {
     this.validateInput(key);
-    const node = splay ? new TrieNode<Value>(key) : this.find(key, this.root);
+    const node = this.find(key, this.root);
     return node ? node.value : null;
   }
 
@@ -160,7 +159,7 @@ export class Trie<Value> {
 
   /**
    * Performs a depth-first traversal of the tree starting from the root node.
-   * @param {function(TrieNode<Value>): void} callback - The callback to execute at each visited node.
+   * @param {Function} callback - The callback to execute at each visited node.
    */
   public traverse(callback: (node: TrieNode<Value>) => void) {
     this.traversal(this.root, callback);
@@ -169,7 +168,7 @@ export class Trie<Value> {
   /**
    * Searches the tree using the specified prefix.
    * @param {string} prefix - The prefix to search by.
-   * @param {(TrieNode<Value>): void} callback - The callback to execute at each visited node.
+   * @param {Function} callback - The callback to execute at each visited node.
    */
   public searchByPrefix(
     prefix: string,
@@ -213,8 +212,8 @@ export class Trie<Value> {
   /**
    * Creates a string representation of the tree.
    */
-  public toString(options: PrintTreeOptions = {}): string {
-    const treeify = PrintTree.create(this.root, options);
+  public toString(options: TreePrinterOptions = {}): string {
+    const treeify = TreePrinter.create(this.root, options);
     return treeify.asTree();
   }
 
@@ -259,31 +258,44 @@ export class Trie<Value> {
 
     if (!key) return null;
 
+    // Create a new node if the input node is null
     if (!node) {
       node = new TrieNode(key);
     }
 
+    // If the root is null then the tree is empty
     if (!this.root) {
       this.root = node;
       this.nodeCount++;
     }
 
+    // Recurse down the left subtree
     if (key < node.key) {
       node.left = this.insert(word, value, node.left);
 
+      // If we successfully assign a left child, we must assign the left child's parent to the input node
       if (node.left) node.left.parent = node;
+
+      // Recurse down the middle subtree
     } else if (key === node.key) {
+      // If there are still characters in the key, move the search cursor forward by one.
       if (word.length > 1) {
         node.middle = this.insert(word.slice(1), value, node.middle);
 
+        // If we successfully assign a middle child, we must assign the middle child's parent to the input node
         if (node.middle) node.middle.parent = node;
+
+        // If there are not still characters in the key, then we have finished inserting the word
       } else {
         node.value = value;
         this.nodeCount++;
       }
+
+      // Recurse down the right subtree
     } else {
       node.right = this.insert(word, value, node.right);
 
+      // If we successfully assign a right child, we must assign the right child's parent to the input node
       if (node.right) node.right.parent = node;
     }
 
@@ -291,7 +303,7 @@ export class Trie<Value> {
   }
 
   /**
-   * Recursively deletes a node from the tree if the node has no left or right sub-tree.
+   * Recursively deletes a node from the tree if the node has no left or right subtree.
    * @param {TrieNode<Value>} node - The node to delete.
    */
   private delete(node: TrieNode<Value>) {
@@ -299,19 +311,23 @@ export class Trie<Value> {
 
     const { parent, left, middle, right } = node;
 
-    if (middle) return;
+    // The presence of a left or right child node signifies a subtree exists so we cannot delete the node.
+    // The presence of a middle node signifies a subtree exists that contains the input key, so we cannot
+    // delete the node. Example: the tree contains both `foo` and `fooo`, and deleting `foo` should
+    // not also remove `fooo`
+    if (middle || !left || !right) return;
 
-    const hasUnequalChildren = !!(left || right);
+    // If the node to delete has a parent node, the link between the node and the parent must be deleted
+    // and then the deletion recurses up the tree
+    if (parent) {
+      this.erase(parent, node);
+      this.delete(parent);
 
-    if (!hasUnequalChildren) {
-      if (parent) {
-        this.erase(parent, node);
-        this.delete(parent);
-      } else {
-        const child = left || right;
-        this.root = child;
-        if (this.root) this.root.parent = null;
-      }
+      // Otherwise the root node is the node to delete
+    } else {
+      const child = left || right;
+      this.root = child;
+      if (this.root) this.root.parent = null;
     }
   }
 
