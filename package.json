@@ -21,7 +21,7 @@
   "scripts": {
     "build": "tsc",
     "bump": "npm version patch",
-    "test": "jest --config jest.config.json",
+    "test": "jest --config jest.config.js",
     "prepare": "yarn build",
     "prepublishOnly": "yarn test",
     "version": "git add -A src",

@@ -1,0 +1,83 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Trie Trie.toString should correctly print the tree 1`] = `
+"├─ key
+├─ value
+├─ parent
+├─ left
+│  ├─ key
+│  ├─ value
+│  ├─ parent (circular ref.)
+│  ├─ left
+│  │  ├─ key
+│  │  ├─ value
+│  │  ├─ parent (circular ref.)
+│  │  ├─ left
+│  │  ├─ middle
+│  │  └─ right
+│  ├─ middle
+│  │  ├─ key
+│  │  ├─ value
+│  │  ├─ parent (circular ref.)
+│  │  ├─ left
+│  │  ├─ middle
+│  │  │  ├─ key
+│  │  │  ├─ value
+│  │  │  ├─ parent (circular ref.)
+│  │  │  ├─ left
+│  │  │  ├─ middle
+│  │  │  └─ right
+│  │  │     ├─ key
+│  │  │     ├─ value
+│  │  │     ├─ parent (circular ref.)
+│  │  │     ├─ left
+│  │  │     ├─ middle
+│  │  │     └─ right
+│  │  └─ right
+│  └─ right
+├─ middle
+│  ├─ key
+│  ├─ value
+│  ├─ parent (circular ref.)
+│  ├─ left
+│  ├─ middle
+│  │  ├─ key
+│  │  ├─ value
+│  │  ├─ parent (circular ref.)
+│  │  ├─ left
+│  │  ├─ middle
+│  │  │  ├─ key
+│  │  │  ├─ value
+│  │  │  ├─ parent (circular ref.)
+│  │  │  ├─ left
+│  │  │  ├─ middle
+│  │  │  │  ├─ key
+│  │  │  │  ├─ value
+│  │  │  │  ├─ parent (circular ref.)
+│  │  │  │  ├─ left
+│  │  │  │  ├─ middle
+│  │  │  │  │  ├─ key
+│  │  │  │  │  ├─ value
+│  │  │  │  │  ├─ parent (circular ref.)
+│  │  │  │  │  ├─ left
+│  │  │  │  │  ├─ middle
+│  │  │  │  │  └─ right
+│  │  │  │  └─ right
+│  │  │  └─ right
+│  │  └─ right
+│  └─ right
+└─ right
+   ├─ key
+   ├─ value
+   ├─ parent (circular ref.)
+   ├─ left
+   ├─ middle
+   │  ├─ key
+   │  ├─ value
+   │  ├─ parent (circular ref.)
+   │  ├─ left
+   │  ├─ middle
+   │  └─ right
+   └─ right
+"
+`;
