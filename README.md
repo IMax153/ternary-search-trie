@@ -111,6 +111,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Acknowledgments
 
-- Hat tip to anyone whose code was used
-- Inspiration
-- etc
+- This project was heavily inspired by work done by @jakwings on [node-ternary-search-trie](https://github.com/jakwings/node-ternary-search-trie), but chose to implement the underlying functionality of the tree by making heavy use of recursion instead of loops.
+- Also the printing functionality of the tree is a replica of [treeify](https://github.com/notatestuser/treeify) from @notatestuser, but implemented in TypeScript
