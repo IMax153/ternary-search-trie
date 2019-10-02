@@ -135,6 +135,31 @@ describe('Trie', () => {
     });
   });
 
+  describe('Trie.searchByPrefix', () => {
+    it('shoud return a list of words found using the specified prefix', () => {
+      const trie = new Trie<string>();
+
+      trie.set('foo', 'foo');
+      trie.set('fooooo', 'fooooo');
+      trie.set('fore', 'fore');
+      trie.set('fobe', 'fobe');
+      trie.set('bar', 'bar');
+      trie.set('baz', 'baz');
+      trie.set('😀', '😀');
+      trie.set('!', '!');
+
+      const expected = ['foo', 'fore', 'fobe', 'fooooo'];
+
+      trie.searchByPrefix('fo', word => {
+        expect(expected).toContain(word);
+      });
+
+      trie.searchByPrefix('😀', word => {
+        expect(word).toBe('😀');
+      });
+    });
+  });
+
   describe('Trie.toString', () => {
     it('should correctly print the tree', () => {
       const trie = new Trie<string>();

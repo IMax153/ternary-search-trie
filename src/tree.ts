@@ -184,27 +184,20 @@ export class Trie<Value> {
     // beginning with the specified prefix), execute the callback
     if (root.value) callback(prefix, root);
 
-    // All words should start with the root node found using the prefix
-    let word = [root.key];
+    // If there is a left child, recurse down the left side of the tree
+    if (root.left) {
+      this.searchByPrefix(prefix + root.left.key, callback);
+    }
 
-    // Traversal starts from the middle child - we only care about words that start with the specified prefix
-    this.traversal(root.middle, node => {
-      // Add each node's key found during the traversal to the word
-      word.push(node.key);
+    // If there is a middle child, recurse down the middle side of the tree
+    if (root.middle) {
+      this.searchByPrefix(prefix + root.middle.key, callback);
+    }
 
-      // If a value is found at a given node, execute the callback
-      if (node.value) {
-        callback(word.join(''), node);
-
-        // If the found node has any children, the current letter must be popped off the stack
-        if (node.hasChildren()) {
-          word.pop();
-        } else {
-          // Otherwise we reset the word to the root prefix and allow traversal to continue
-          word = [root.key];
-        }
-      }
-    });
+    // If there is a right child, recurse down the right side of the tree
+    if (root.right) {
+      this.searchByPrefix(prefix + root.right.key, callback);
+    }
 
     return this;
   }
