@@ -9,7 +9,7 @@
   },
   "plugins": ["@typescript-eslint", "import"],
   "extends": [
-    "airbnb",
+    // "airbnb",
     "plugin:@typescript-eslint/recommended",
     "prettier",
     "prettier/@typescript-eslint"
@@ -42,8 +42,7 @@
     "no-bitwise": "off",
     "no-console": "off",
     "no-new": "off",
-    "no-param-reassign": "off",
-    "no-plusplus": "off",
+    "no-restricted-syntax": "off",
     "no-shadow": "off",
     "no-undef": "off",
     "no-underscore-dangle": "off",
