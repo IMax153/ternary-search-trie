@@ -31,11 +31,11 @@ Represents a [ternary search trie](https://en.wikipedia.org/wiki/Ternary_search_
 ```typescript
 import { Trie } from 'ternary-search-trie';
 
-interface ValueType {
+interface Value {
   data: string;
 }
 
-const trie = new Trie<ValueType>();
+const trie = new Trie<Value>();
 ```
 
 ### Members
@@ -44,24 +44,24 @@ const trie = new Trie<ValueType>();
 
 Gets the size of the tree in terms of the number of nodes present within the tree.
 
+#### Trie.isEmpty
+
+Returns true if the tree contains any nodes, otherwise false.
+
 ### Methods
-
-#### keys()
-
-Gets all keys present in the tree.
 
 #### set(key, value)
 
-Creates a new node in the tree with the specified key and value.
+Adds the specified key/value pair to the tree.
 
-| Param |   Type    | Description           |
-| ----- | :-------: | :-------------------- |
-| key   |  string   | The key of the node   |
-| value | ValueType | The value of the node |
+| Param |  Type  | Description          |
+| ----- | :----: | :------------------- |
+| key   | string | The key to add       |
+| value | Value  | The value of the key |
 
 #### get(key)
 
-Recursively searches the tree for the node with the specified key and returns its value if it exists.
+Returns the value of the node with the specified key.
 
 | Param |  Type  | Description         |
 | ----- | :----: | :------------------ |
@@ -69,37 +69,52 @@ Recursively searches the tree for the node with the specified key and returns it
 
 #### del(key)
 
-Deletes a node from the tree if it exists.
+Deletes the node with the specified key.
 
 | Param |  Type  | Description                   |
 | ----- | :----: | :---------------------------- |
 | key   | string | The key of the node to delete |
 
-#### traverse(callback)
+#### contains(key)
 
-Performs a depth-first traversal of the tree starting from the root node.
+Checks if a node with the specified key exists in the tree.
 
-| Param    |                Type                 | Description                                  |
-| -------- | :---------------------------------: | :------------------------------------------- |
-| callback | (node: TrieNode<ValueType>) => void | The callback to execute at each visited node |
+| Param |  Type  | Description                  |
+| ----- | :----: | :--------------------------- |
+| key   | string | The key of the node to check |
 
-#### searchByPrefix(prefix, callback)
+#### dfs(callback)
 
-Searches the tree using the specified prefix.
+Performs a depth-first search of the tree beginning from the root node. Executes the specified callback at each visited node.
 
-| Param    |                        Type                         | Description                                  |
-| -------- | :-------------------------------------------------: | :------------------------------------------- |
-| prefix   |                       string                        | The prefix to search by                      |
-| callback | (prefix: string, node: TrieNode<ValueType>) => void | The callback to execute at each visited node |
+| Param    |              Type               | Description             |
+| -------- | :-----------------------------: | :---------------------- |
+| callback | (node: Node<ValueType>) => void | The callback to execute |
 
-#### toString(options)
+#### keys()
 
-| Param                 |   Type   | Description                                                          |
-| --------------------- | :------: | :------------------------------------------------------------------- |
-| options               |  object  | Optional parameters for printing the tree                            |
-| options.showFunctions | boolean  | Determines whether or not functions in the tree should be displayed. |
-| options.showValues    | boolean  | Determines whether or not values in the tree should be displayed.    |
-| options.skipKeys      | string[] | Keys in the tree that should not be displayed.                       |
+Returns an array of all keys present in the tree.
+
+#### keysWithPrefix(prefix)
+
+Returns all keys present in the tree that begin with the specified prefix.
+
+| Param  |  Type  | Description             |
+| ------ | :----: | :---------------------- |
+| prefix | string | The prefix to search by |
+
+#### searchWithPrefix(prefix, callback)
+
+Executes the specified callback at each node in the tree whose key begins with the specified prefix.
+
+| Param    |                       Type                        | Description             |
+| -------- | :-----------------------------------------------: | :---------------------- |
+| prefix   |                      string                       | The prefix to search by |
+| callback | (prefix: string, (node: Node<ValueType>) => void) | The callback to execute |
+
+#### toString()
+
+Returns the tree as a string.
 
 ## Contributing
 
@@ -112,4 +127,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Acknowledgments
 
 - This project was heavily inspired by work done by @jakwings on [node-ternary-search-trie](https://github.com/jakwings/node-ternary-search-trie). This project differs in that it is written in TypeScript and chose to implement the underlying functionality of the tree by making heavy use of recursion instead of loops.
-- Also the printing functionality of the tree is a replica of [treeify](https://github.com/notatestuser/treeify) from @notatestuser, but implemented in TypeScript.

@@ -1,1 +1,1 @@
-export { Trie } from './tree';
+export { Trie } from './trie';

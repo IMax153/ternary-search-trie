@@ -1,0 +1,99 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Trie Trie.toString should correctly return the tree as a string 1`] = `
+"Trie {
+  root: Node {
+    key: 'f',
+    value: null,
+    parent: null,
+    left: Node {
+      key: 'b',
+      value: null,
+      parent: [Circular],
+      left: Node {
+        key: '!',
+        value: '!',
+        parent: [Circular],
+        left: null,
+        middle: null,
+        right: null
+      },
+      middle: Node {
+        key: 'a',
+        value: null,
+        parent: [Circular],
+        left: null,
+        middle: Node {
+          key: 'r',
+          value: 'bar',
+          parent: [Circular],
+          left: null,
+          middle: null,
+          right: Node {
+            key: 'z',
+            value: 'baz',
+            parent: [Circular],
+            left: null,
+            middle: null,
+            right: null
+          }
+        },
+        right: null
+      },
+      right: null
+    },
+    middle: Node {
+      key: 'o',
+      value: null,
+      parent: [Circular],
+      left: null,
+      middle: Node {
+        key: 'o',
+        value: 'foo',
+        parent: [Circular],
+        left: null,
+        middle: Node {
+          key: 'o',
+          value: null,
+          parent: [Circular],
+          left: null,
+          middle: Node {
+            key: 'o',
+            value: null,
+            parent: [Circular],
+            left: null,
+            middle: Node {
+              key: 'o',
+              value: 'fooooo',
+              parent: [Circular],
+              left: null,
+              middle: null,
+              right: null
+            },
+            right: null
+          },
+          right: null
+        },
+        right: null
+      },
+      right: null
+    },
+    right: Node {
+      key: '汉',
+      value: null,
+      parent: [Circular],
+      left: null,
+      middle: Node {
+        key: '字',
+        value: '汉字',
+        parent: [Circular],
+        left: null,
+        middle: null,
+        right: null
+      },
+      right: null
+    }
+  },
+  count: 6
+}"
+`;
