@@ -90,7 +90,7 @@ export class Trie<Value> {
   public keys(): string[] {
     const keys: string[] = [];
 
-    this.getKeys(this.root, '', word => keys.push(word));
+    this.getKeyValuePairs(this.root, '', word => keys.push(word));
 
     return keys;
   }
@@ -103,7 +103,7 @@ export class Trie<Value> {
     const keys: string[] = [];
 
     const start = this.find(prefix, this.root);
-    if (start) this.getKeys(start.middle, prefix, word => keys.push(word));
+    if (start) this.getKeyValuePairs(start.middle, prefix, word => keys.push(word));
 
     return keys;
   }
@@ -113,16 +113,16 @@ export class Trie<Value> {
    * @param prefix The key prefix to search by.
    * @param callback The callback to execute.
    */
-  public searchWithPrefix(prefix: string, callback: (node: Node<Value>) => void): void {
+  public searchWithPrefix(prefix: string, callback: (key: string, value: Value) => void): void {
     const start = this.find(prefix, this.root);
-    if (start) this.getNodes(start.middle, callback);
+    if (start) this.getKeyValuePairs(start.middle, prefix, callback);
   }
 
   /**
    * Performs a depth-first search of the tree beginning from the root node. Executes the specified callback at each visited node.
    * @param callback The callback to execute.
    */
-  public dfs(callback: (node: Node<Value>) => void): void {
+  public dfs(callback: (key: string, value: Value | null) => void): void {
     this.depthFirstSearch(this.root, callback);
   }
 
@@ -130,47 +130,7 @@ export class Trie<Value> {
    * Returns the tree as a string.
    */
   public toString(): string {
-    return inspect(this, { showHidden: false, depth: null });
-  }
-
-  private getKeys(node: Node<Value> | null, prefix: string, callback: (key: string) => void) {
-    if (!node) return;
-
-    if (node.value) callback(prefix + node.key);
-
-    this.getKeys(node.left, prefix, callback);
-    this.getKeys(node.middle, prefix + node.key, callback);
-    this.getKeys(node.right, prefix, callback);
-  }
-
-  private getNodes(node: Node<Value> | null, callback: (node: Node<Value>) => void) {
-    if (!node) return;
-
-    if (node.value) callback(node);
-
-    this.getNodes(node.left, callback);
-    this.getNodes(node.middle, callback);
-    this.getNodes(node.right, callback);
-  }
-
-  private find(word: string, node: Node<Value> | null): Node<Value> | null {
-    if (!node) return null;
-
-    const key = [...word][0];
-
-    // Recurse Left
-    if (key < node.key) {
-      return this.find(word, node.left);
-      // Recurse Right
-    } else if (key > node.key) {
-      return this.find(word, node.right);
-      // Recurse Middle
-    } else if (word.length > 1) {
-      return this.find(word.slice(1), node.middle);
-      // End of input
-    } else {
-      return node;
-    }
+    return inspect(this.root, { showHidden: false, depth: null });
   }
 
   private insert(node: Node<Value> | null, word: string, value: Value): Node<Value> {
@@ -209,24 +169,23 @@ export class Trie<Value> {
     return node;
   }
 
-  private depthFirstSearch(root: Node<Value> | null, callback: (node: Node<Value>) => void): void {
-    if (!root) return;
+  private find(word: string, node: Node<Value> | null): Node<Value> | null {
+    if (!node) return null;
 
-    callback(root);
+    const key = [...word][0];
 
-    // Left
-    if (root.left) {
-      this.depthFirstSearch(root.left, callback);
-    }
-
-    // Middle
-    if (root.middle) {
-      this.depthFirstSearch(root.middle, callback);
-    }
-
-    // Right
-    if (root.right) {
-      this.depthFirstSearch(root.right, callback);
+    // Recurse Left
+    if (key < node.key) {
+      return this.find(word, node.left);
+      // Recurse Right
+    } else if (key > node.key) {
+      return this.find(word, node.right);
+      // Recurse Middle
+    } else if (word.length > 1) {
+      return this.find(word.slice(1), node.middle);
+      // End of input
+    } else {
+      return node;
     }
   }
 
@@ -304,6 +263,44 @@ export class Trie<Value> {
           child.parent = node.parent;
         }
       }
+    }
+  }
+
+  private getKeyValuePairs(
+    node: Node<Value> | null,
+    prefix: string,
+    callback: (key: string, value: Value) => void,
+  ) {
+    if (!node) return;
+
+    if (node.value) callback(prefix + node.key, node.value);
+
+    this.getKeyValuePairs(node.left, prefix, callback);
+    this.getKeyValuePairs(node.middle, prefix + node.key, callback);
+    this.getKeyValuePairs(node.right, prefix, callback);
+  }
+
+  private depthFirstSearch(
+    node: Node<Value> | null,
+    callback: (key: string, value: Value | null) => void,
+  ): void {
+    if (!node) return;
+
+    callback(node.key, node.value);
+
+    // Left
+    if (node.left) {
+      this.depthFirstSearch(node.left, callback);
+    }
+
+    // Middle
+    if (node.middle) {
+      this.depthFirstSearch(node.middle, callback);
+    }
+
+    // Right
+    if (node.right) {
+      this.depthFirstSearch(node.right, callback);
     }
   }
 

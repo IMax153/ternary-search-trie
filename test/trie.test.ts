@@ -140,23 +140,6 @@ describe('Trie', () => {
     });
   });
 
-  describe('Trie.dfs', () => {
-    it('should perform a depth-first search, visiting each node in the trie', () => {
-      const trie = new Trie<string>();
-      const keys = ['foo', '汉字', '!', 'fooo', 'bar'];
-
-      keys.forEach(key => trie.set(key, key));
-
-      trie.dfs(node => {
-        expect(keys.some(key => key.includes(node.key))).toBeTruthy();
-
-        if (node.value) {
-          expect(keys).toContain(node.value);
-        }
-      });
-    });
-  });
-
   describe('Trie.keys', () => {
     it('should return all keys in the trie', () => {
       const trie = new Trie<string>();
@@ -210,11 +193,28 @@ describe('Trie', () => {
       const expectedValues = ['foo', 'fore', 'fobe', 'fooooo'];
       const actualValues: (string | null)[] = [];
 
-      trie.searchWithPrefix('fo', node => {
-        actualValues.push(node.value);
+      trie.searchWithPrefix('fo', (key, value) => {
+        actualValues.push(value);
       });
 
       expect(actualValues.sort()).toMatchObject(expectedValues.sort());
+    });
+  });
+
+  describe('Trie.dfs', () => {
+    it('should perform a depth-first search, visiting each node in the trie', () => {
+      const trie = new Trie<string>();
+      const keys = ['foo', '汉字', '!', 'fooo', 'bar'];
+
+      keys.forEach(key => trie.set(key, key));
+
+      trie.dfs((key, value) => {
+        expect(keys.some(word => word.includes(key))).toBeTruthy();
+
+        if (value) {
+          expect(keys).toContain(value);
+        }
+      });
     });
   });
 
