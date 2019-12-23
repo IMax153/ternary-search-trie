@@ -1,6 +1,6 @@
 {
   "name": "ternary-search-trie",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "A ternary search tree implementation in TypeScript.",
   "author": "Maxwell Brown <maxwellbrown1990@gmail.com>",
   "license": "MIT",

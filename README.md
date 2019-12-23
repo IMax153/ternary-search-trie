@@ -189,7 +189,7 @@ console.log(trie.keysWithPrefix('ba'));
 #### searchWithPrefix
 
 ```typescript
-searchWithPrefix(prefix: string, callback: (key: string, value: Value | null) => void): void;
+searchWithPrefix(prefix: string, callback: (key: string, value: Value) => void): void;
 ```
 
 Executes the specified callback at each node in the tree whose key begins with the specified prefix.
@@ -203,7 +203,7 @@ trie.set('foo', value);
 trie.set('bar', value);
 trie.set('baz', value);
 
-trie.searchWithPrefix('ba', node => console.log({ key: node.key, value: node.value }));
+trie.searchWithPrefix('ba', (key, value) => console.log({ key, value }));
 //=> { key: 'bar', value: { data: 'test' } }
 //=> { key: 'baz', value: { data: 'test' } }
 ```
